@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Solar System — Hand Explorer</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@300;400;700;900&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+<!-- Component Stylesheets -->
+<link rel="stylesheet" href="css/landing.css">
+<link rel="stylesheet" href="css/app.css">
+<link rel="stylesheet" href="css/chatbot.css">
+<link rel="stylesheet" href="css/narration.css">
+</head>
+<body>
+
+<!-- ══════════════ COMPONENT 1: LANDING PAGE ══════════════ -->
+<div id="landing-overlay">
+  <div id="landing-cursor">
+    <div class="cursor-ring"></div>
+    <div class="cursor-dot"></div>
+  </div>
+  <canvas id="landing-stars"></canvas>
+  <div class="nebula nebula-1"></div>
+  <div class="nebula nebula-2"></div>
+  <div class="nebula nebula-3"></div>
+  <div class="sun-core"></div>
+  <div class="orbit-ring ring-1"></div>
+  <div class="orbit-ring ring-2"></div>
+  <div class="orbit-ring ring-3"></div>
+  <div id="landing-content">
+    <p class="landing-eyebrow">Interactive Experience &nbsp;·&nbsp; Hand Tracking &nbsp;·&nbsp; AI Narration</p>
+    <h1 class="landing-title">
+      <span class="word-solar">Solar</span>
+      <span class="word-system">System</span>
+    </h1>
+    <p class="landing-subtitle">
+      Navigate our cosmic neighbourhood<br>
+      using only your hand — no controller required.
+    </p>
+    <div class="landing-divider"></div>
+    <button class="landing-btn" id="landing-enter-btn">Begin Exploration</button>
+    <div class="landing-features">
+      <span class="feature-pill">Hand Gesture Control</span>
+      <span class="feature-pill">8 Planets</span>
+      <span class="feature-pill">Live Narration</span>
+      <span class="feature-pill">AI Chatbot</span>
+    </div>
+  </div>
+  <div class="scroll-hint">▼ &nbsp; Press anywhere to enter &nbsp; ▼</div>
+</div>
+
+<!-- ══════════════ COMPONENT 2: MAIN CANVAS APP ══════════════ -->
+<canvas id="canvas"></canvas>
+<video id="video" autoplay muted playsinline></video>
+
+<div id="ui">
+  <div id="fps">FPS —</div>
+  <div id="mode-badge">solar system</div>
+  <div id="instruction-box">
+    <h4>Hand Controls</h4>
+    <div class="instruction-item">
+      <span class="gesture-icon">👆</span>
+      <span class="instruction-text">Point index finger to aim</span>
+    </div>
+    <div class="instruction-item">
+      <span class="gesture-icon">✋</span>
+      <span class="instruction-text">Open hand to explore planet</span>
+    </div>
+    <div class="instruction-item">
+      <span class="gesture-icon">↔</span>
+      <span class="instruction-text">Two hands to zoom system</span>
+    </div>
+    <div class="instruction-item">
+      <span class="gesture-icon">✊</span>
+      <span class="instruction-text">Closed fist to rotate</span>
+    </div>
+    <div class="instruction-item">
+      <span class="gesture-icon">✊✊</span>
+      <span class="instruction-text">Both fists to exit planet</span>
+    </div>
+  </div>
+  <div id="planet-name">Solar System</div>
+  <div id="planet-sub">right index to aim · open hand to explore</div>
+  <div id="info-panel" style="opacity:0">
+    <h3>Planet Data</h3>
+    <div class="info-row"><div class="info-label">Type</div><div class="info-val" id="i-type">—</div></div>
+    <div class="info-row"><div class="info-label">Diameter</div><div class="info-val" id="i-dia">—</div></div>
+    <div class="info-row"><div class="info-label">From Sun</div><div class="info-val" id="i-dist">—</div></div>
+    <div class="info-row"><div class="info-label">Day</div><div class="info-val" id="i-day">—</div></div>
+    <div class="info-row"><div class="info-label">Year</div><div class="info-val" id="i-year">—</div></div>
+    <div class="info-row"><div class="info-label">Moons</div><div class="info-val" id="i-moons">—</div></div>
+    <div class="info-row"><div class="info-label">Temperature</div><div class="info-val" id="i-temp">—</div></div>
+  </div>
+  <div id="hint" style="display:none"></div>
+  <div id="gesture-hud"></div>
+  <div id="status"></div>
+  <div id="moon-badge" style="opacity:0"></div>
+</div>
+
+<div id="cursor"></div>
+<div id="spotlight"></div>
+
+<!-- ══════════════ COMPONENT 3: CHATBOT ══════════════ -->
+<div id="chatbot-container">
+  <div id="chatbot-header">
+    <div id="chatbot-title">🌌 Solar System AI</div>
+    <button id="chatbot-toggle">−</button>
+  </div>
+  <div id="chatbot-messages"></div>
+  <div id="chatbot-input-container">
+    <input type="text" id="chatbot-input" placeholder="Ask about the Solar System...">
+    <button id="chatbot-send">Send</button>
+  </div>
+</div>
+
+<!-- ══════════════ COMPONENT 4: NARRATION PANEL ══════════════ -->
+<div id="narration-panel">
+  <div id="narration-header">
+    <div id="narration-title">
+      <span class="speaker-icon">🔊</span>
+      <span id="narration-topic">Loading...</span>
+    </div>
+    <button id="narration-close">✕ Minimize</button>
+  </div>
+  <div id="narration-content">
+    <p>Initializing narration system...</p>
+  </div>
+  <div id="narration-controls">
+    <button class="narration-btn" id="narration-play">▶ Play</button>
+    <button class="narration-btn" id="narration-pause">⏸ Pause</button>
+    <button class="narration-btn" id="narration-stop">⏹ Stop</button>
+  </div>
+</div>
+<div id="narration-arrow"></div>
+
+<!-- ══════════════ MEDIAPIPE CDN ══════════════ -->
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
+
+<!-- ══════════════ COMPONENT SCRIPTS ══════════════ -->
+<script src="js/planets-data.js"></script>
+<script src="js/renderer.js"></script>
+<script src="js/hand-tracking.js"></script>
+<script src="js/chatbot.js"></script>
+<script src="js/narration.js"></script>
+<script src="js/landing.js"></script>
+
+</body>
+</html>

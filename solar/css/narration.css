@@ -1,0 +1,139 @@
+/* ══════════════════════════════════════════
+   css/narration.css  —  Auto-Narration Panel
+══════════════════════════════════════════ */
+
+#narration-panel {
+  position: fixed;
+  left: -450px; top: 20px;
+  width: 420px;
+  max-height: 45vh;
+  background: linear-gradient(135deg, rgba(20,30,50,0.95), rgba(30,40,60,0.95));
+  border: 2px solid rgba(120,220,255,0.5);
+  border-left: none;
+  border-radius: 0 16px 16px 0;
+  backdrop-filter: blur(20px);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.8), 0 0 40px rgba(120,220,255,0.3);
+  z-index: 150;
+  pointer-events: auto;
+  transition: left 0.6s cubic-bezier(0.68,-0.55,0.265,1.55);
+  overflow: hidden;
+}
+#narration-panel.visible { left: 0; }
+
+/* Arrow tab to re-open the panel */
+#narration-arrow {
+  position: fixed;
+  left: 0; top: 20px;
+  width: 40px; height: 60px;
+  background: linear-gradient(135deg, rgba(80,120,200,0.9), rgba(40,80,160,0.9));
+  border: 2px solid rgba(120,220,255,0.5);
+  border-left: none;
+  border-radius: 0 12px 12px 0;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.6), 0 0 20px rgba(120,220,255,0.3);
+  z-index: 149;
+  pointer-events: auto;
+  cursor: pointer;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  color: rgba(255,255,255,0.9);
+  transition: all 0.3s ease;
+}
+#narration-arrow:hover {
+  width: 50px;
+  background: linear-gradient(135deg, rgba(100,140,220,0.95), rgba(60,100,180,0.95));
+  box-shadow: 0 4px 20px rgba(0,0,0,0.8), 0 0 30px rgba(120,220,255,0.5);
+}
+#narration-arrow.visible { display: flex; }
+#narration-arrow::before {
+  content: '▶';
+  animation: arrowPulse 2s ease-in-out infinite;
+}
+
+@keyframes arrowPulse {
+  0%, 100% { transform: translateX(0); }
+  50%       { transform: translateX(5px); }
+}
+
+#narration-header {
+  background: linear-gradient(135deg, rgba(80,120,200,0.4), rgba(40,80,160,0.4));
+  padding: 16px 20px;
+  border-bottom: 1px solid rgba(120,220,255,0.4);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+#narration-title {
+  font-size: 16px; font-weight: bold;
+  color: rgba(120,220,255,1);
+  text-transform: uppercase; letter-spacing: 0.15em;
+  display: flex; align-items: center; gap: 10px;
+}
+#narration-close {
+  background: rgba(255,160,80,0.3);
+  border: 1px solid rgba(255,180,100,0.5);
+  border-radius: 6px;
+  padding: 6px 12px;
+  color: rgba(255,255,255,0.9);
+  font-size: 12px; cursor: pointer;
+  transition: all 0.2s;
+  text-transform: uppercase; letter-spacing: 0.05em;
+}
+#narration-close:hover {
+  background: rgba(255,160,80,0.5);
+  box-shadow: 0 0 15px rgba(255,160,80,0.4);
+}
+
+#narration-content {
+  padding: 24px;
+  overflow-y: auto;
+  max-height: calc(45vh - 140px);
+  font-size: 14px; line-height: 1.8;
+  color: rgba(220,230,255,0.95);
+}
+#narration-content::-webkit-scrollbar { width: 6px; }
+#narration-content::-webkit-scrollbar-track { background: rgba(0,0,0,0.2); border-radius: 3px; }
+#narration-content::-webkit-scrollbar-thumb { background: rgba(120,220,255,0.3); border-radius: 3px; }
+#narration-content::-webkit-scrollbar-thumb:hover { background: rgba(120,220,255,0.5); }
+#narration-content p { margin-bottom: 12px; }
+#narration-content strong { color: rgba(120,220,255,0.95); font-weight: bold; }
+
+#narration-controls {
+  padding: 16px 20px;
+  border-top: 1px solid rgba(120,220,255,0.3);
+  display: flex; gap: 12px; justify-content: center;
+}
+
+.narration-btn {
+  background: linear-gradient(135deg, rgba(80,160,255,0.4), rgba(60,120,220,0.4));
+  border: 1px solid rgba(120,220,255,0.4);
+  border-radius: 8px;
+  padding: 10px 20px;
+  color: rgba(255,255,255,0.95);
+  font-size: 12px; font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-transform: uppercase; letter-spacing: 0.05em;
+  display: flex; align-items: center; gap: 6px;
+}
+.narration-btn:hover {
+  background: linear-gradient(135deg, rgba(100,180,255,0.5), rgba(80,140,240,0.5));
+  box-shadow: 0 0 15px rgba(120,220,255,0.4);
+}
+.narration-btn:active { transform: scale(0.95); }
+.narration-btn.playing {
+  background: linear-gradient(135deg, rgba(255,160,80,0.4), rgba(220,120,60,0.4));
+  border-color: rgba(255,180,100,0.4);
+}
+
+.speaker-icon {
+  display: inline-block;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.7; transform: scale(1.1); }
+}
